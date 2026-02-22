@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Naz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c2c2c;
+            --accent: #8b5a5a;
+            --soft: #d4a5a5;
+            --cream: #faf6f4;
+            --gold: #c9a87c;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--cream);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--soft);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) scale(1);
+            }
+        }
+
+        /* Main container */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Cover / Intro */
+        .cover {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.8s ease;
+        }
+
+        .cover.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8);
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+        }
+
+        .envelope {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            animation: gentle-sway 3s ease-in-out infinite;
+        }
+
+        @keyframes gentle-sway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        .envelope svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--accent);
+            filter: drop-shadow(0 10px 30px rgba(139, 90, 90, 0.3));
+            transition: transform 0.5s ease;
+        }
+
+        .envelope:hover svg {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .tap-hint {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #999;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Letter content */
+        .letter {
+            max-width: 700px;
+            width: 100%;
+            background: #fff;
+            padding: 60px 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            border-radius: 5px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+            display: none;
+            position: relative;
+        }
+
+        .letter.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .letter-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--primary);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .letter-header .from {
+            font-size: 1rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .letter-content {
+            color: var(--primary);
+            line-height: 2.2;
+            font-size: 1.15rem;
+        }
+
+        .letter-content p {
+            margin-bottom: 25px;
+            text-align: justify;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .letter-content p:nth-child(1) { animation-delay: 0.3s; }
+        .letter-content p:nth-child(2) { animation-delay: 0.6s; }
+        .letter-content p:nth-child(3) { animation-delay: 0.9s; }
+        .letter-content p:nth-child(4) { animation-delay: 1.2s; }
+        .letter-content p:nth-child(5) { animation-delay: 1.5s; }
+        .letter-content p:nth-child(6) { animation-delay: 1.8s; }
+        .letter-content p:nth-child(7) { animation-delay: 2.1s; }
+        .letter-content p:nth-child(8) { animation-delay: 2.4s; }
+        .letter-content p:nth-child(9) { animation-delay: 2.7s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .letter-content .highlight {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .letter-signature {
+            margin-top: 50px;
+            text-align: right;
+            font-style: italic;
+            color: var(--accent);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 3s forwards;
+        }
+
+        .letter-signature .name {
+            font-size: 1.3rem;
+            font-family: 'Playfair Display', serif;
+            margin-top: 10px;
+        }
+
+        /* Response section */
+        .response-section {
+            margin-top: 50px;
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 3.5s forwards;
+        }
+
+        .response-question {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .response-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .response-btn {
+            padding: 15px 40px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .response-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .response-btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-yes {
+            background: var(--accent);
+            color: white;
+            border-radius: 30px;
+        }
+
+        .btn-yes:hover {
+            background: #6b4545;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 90, 90, 0.4);
+        }
+
+        .btn-maybe {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+        }
+
+        .btn-maybe:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-no {
+            background: #999;
+            color: white;
+            border-radius: 30px;
+        }
+
+        .btn-no:hover {
+            background: #666;
+            transform: translateY(-3px);
+        }
+
+        /* Response messages */
+        .response-message {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .response-message.show {
+            display: block;
+        }
+
+        .response-message.positive {
+            background: linear-gradient(135deg, #fce4e4 0%, #faf6f4 100%);
+            border: 1px solid var(--soft);
+        }
+
+        .response-message.neutral {
+            background: linear-gradient(135deg, #f5f5f5 0%, #faf6f4 100%);
+            border: 1px solid #ddd;
+        }
+
+        .response-message.negative {
+            background: linear-gradient(135deg, #f5f5f5 0%, #faf6f4 100%);
+            border: 1px solid #ddd;
+        }
+
+        .response-message h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .response-message p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Hearts animation */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
+        }
+
+        .hearts-container.show {
+            display: block;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            animation: heartFloat 3s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1);
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-150px) scale(0.5);
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 600px) {
+            .letter {
+                padding: 40px 25px;
+            }
+
+            .letter-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .letter-content {
+                font-size: 1.05rem;
+            }
+
+            .cover-title {
+                font-size: 1.4rem;
+            }
+
+            .response-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Decorative elements */
+        .decorative-line {
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Hearts for celebration -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="main-container">
+        <!-- Cover / Intro -->
+        <div class="cover" id="cover" onclick="openLetter()">
+            <div class="envelope-container">
+                <div class="envelope">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </div>
+            </div>
+            <h2 class="cover-title">SEBUAH SURAT</h2>
+            <p class="cover-subtitle">untuk seseorang yang special</p>
+            <p class="tap-hint">tap untuk membuka</p>
+        </div>
+
+        <!-- Letter content -->
+        <div class="letter" id="letter">
+            <div class="letter-header">
+                <h1>Hai, Naz.</h1>
+                <div class="decorative-line"></div>
+                <p class="from">— dari Ruri</p>
+            </div>
+
+            <div class="letter-content">
+                <p>
+                    Ini Ruri. Gue tau ini mungkin keliatan random banget, dan mungkin lu juga udah bisa nebak suatu hari gue bakal muncul lagi kaya gini. Gue juga sadar mungkin di mata lu gue cuma orang yang dateng, ilang, terus dateng lagi. Dan kalau itu bikin lu ngerasa aneh atau capek, gue ngerti kok.
+                </p>
+
+                <p>
+                    Jujur, salah satu alasan gue nulis ini karena <span class="highlight">gue gak mau lagi jadi orang yang ninggalin tanpa kejelasan</span>. Dulu waktu gue nunjukkin rasa suka gue ke lu dan segala effort yang gue lakuin, itu semua tulus. Tapi setelah itu gue malah ghosting dan gak ngasih penjelasan yang layak. Itu salah gue, dan sampai sekarang gue masih ngerasa bersalah soal itu. Mungkin waktu itu gue belum cukup dewasa buat ngadepin perasaan gue sendiri.
+                </p>
+
+                <p>
+                    Selama kita gak contact, gue ketemu banyak orang, kenal banyak cewe di sekolah, bahkan sempet deket juga. Tapi entah kenapa <span class="highlight">rasanya beda</span>. Gak pernah bener-bener "klik", gak pernah ada spark yang bertahan lama. Dan tiap semuanya selesai, gue malah ngerasa kosong. Bukan karena mereka kurang, tapi karena ada bagian dari diri gue yang ternyata belum selesai sama masa lalu gue.
+                </p>
+
+                <p>
+                    Gue gak nulis ini buat maksa lu nerima gue lagi atau langsung balik kaya dulu. Gue cuma pengen jujur sama apa yang gue rasain sekarang. Ternyata sampai hari ini, <span class="highlight">gue masih ada rasa itu</span>. Mungkin gak se-impulsif dulu, mungkin sekarang lebih tenang, tapi tetap ada.
+                </p>
+
+                <p>
+                    Kalau lu udah bahagia sama jalan hidup lu sekarang, gue bakal hormatin itu sepenuhnya. Tapi kalau masih ada sedikit ruang buat gue sekadar ngobrol lagi, mulai pelan-pelan tanpa ekspektasi berlebihan, <span class="highlight">gue mau coba lagi — kali ini dengan versi gue yang lebih dewasa dan lebih ngerti cara ngehargain orang</span>.
+                </p>
+
+                <p>
+                    Apapun jawaban lu nanti, gue bakal terima. Setidaknya kali ini <span class="highlight">gue gak lari dari perasaan gue sendiri</span>.
+                </p>
+            </div>
+
+            <div class="letter-signature">
+                <p>Dengan segala kesungguhan,</p>
+                <p class="name">Ruri</p>
+            </div>
+
+            <!-- Response buttons -->
+            <div class="response-section">
+                <p class="response-question">Jadi, gimana perasaan Naz setelah baca ini?</p>
+                <div class="response-buttons">
+                    <button class="response-btn btn-yes" onclick="showResponse('yes')">Mau Coba Lagi</button>
+                    <button class="response-btn btn-maybe" onclick="showResponse('maybe')">Bisa Ngobrol Dulu</button>
+                    <button class="response-btn btn-no" onclick="showResponse('no')">Maaf, Gak Bisa</button>
+                </div>
+
+                <!-- Response messages -->
+                <div class="response-message positive"
